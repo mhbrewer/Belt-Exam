@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang=en>
+
+<head>
+    <meta charset="UTF-8">
+    <title>New Job</title>
+    <meta name="description" content="Users">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'beltApp/css/style.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-light myNav">
+            <h1 class="myNavText">Create New Job</h1>
+            <form class="form-inline" id="myNavButton" action="/belt" method="get">
+                <button class="btn btn-outline-success my-2 my-sm-0" id="myNavButton" type="submit">Home</button>
+            </form>
+            <form class="form-inline" id="myNavButton" action="/logout" method="get">
+                <button class="btn btn-outline-success my-2 my-sm-0" id="myNavButton" type="submit">Logout</button>
+            </form> 
+        </nav>
+    </div>
+    <div class='row col-sm-12'>
+        <div class='col-sm-4'></div>
+        <div class="container mt-3 col-sm-4">
+            <h3 class='text-center'>Create New Job</h3>
+            <form action="/belt/job/new/process" method='post'>
+                {% csrf_token %}
+                <div class="input-group mb-3">
+                    {% if messages %}
+                        <ul class="flashes">
+                            {% for message in messages %}
+                                {% if message.extra_tags == "title" %}
+                                    <li class='redText'>{{ message }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" name="title">
+                </div>
+                <div class="input-group mb-3">
+                    {% if messages %}
+                        <ul class="flashes">
+                            {% for message in messages %}
+                                {% if message.extra_tags == "description" %}
+                                    <li class='redText'>{{ message }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    <label for="description">Description</label>
+                    <input type="text" class="form-control" name="description">
+                </div>
+                <div class="input-group mb-3">
+                    {% if messages %}
+                        <ul class="flashes">
+                            {% for message in messages %}
+                                {% if message.extra_tags == "location" %}
+                                    <li class='redText'>{{ message }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    <label for="location">Location</label>
+                    <input type="text" class="form-control" name="location">
+                </div>
+                {% if messages %}
+                    <ul class="flashes">
+                        {% for message in messages %}
+                            {% if message.extra_tags == "categories" %}
+                                <li class='redText'>{{ message }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <label for="pet">Pet Care</label>
+                <input type="checkbox" name="pet" value="pet">
+                <label for="electrical">Electrical</label>
+                <input type="checkbox" name="electrical" value="electrical">
+                <label for="garden">Garden</label>
+                <input type="checkbox" name="garden" value="garden">
+                <input type="text" name="extraCategories">
+                
+                <button type="submit" class="btn btn-primary">Create</button>
+            </form>
+            <form action="/belt" method='get'>
+                <button type="submit" class="btn btn-primary">Cancel</button>
+            </form>
+        </div>
+        <div class='col-sm-4'></div>
+    </div>
+</body>
+
+</html>

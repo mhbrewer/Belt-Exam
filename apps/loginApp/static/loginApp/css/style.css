@@ -1,0 +1,63 @@
+* {
+    vertical-align: baseline;
+    font-family: inherit;
+    font-style: inherit;
+    font-size: 100%;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+}
+body{
+    background-color: peachpuff;
+}
+.action{
+    display: inline-block;
+    margin-left: 5px;
+}
+#myNavButton{
+    margin-right: 5%;
+    color: lightgray;
+    border-color: lightgray;
+    transition: 0.3s;
+    border-radius: 4px;
+}
+#myNavButton:hover{
+    background-color: rgb(0, 105, 217);
+    color: white;
+    border-color: white;
+}
+.myNavText{
+    font-size: 3em;
+    margin-left: 5%;
+    color: white;
+}
+.myNav{
+    background-color: rgb(50, 50, 50);
+}
+.myTableHeader{
+    background-color: rgb(0, 105, 217);
+}
+.myTableText{
+    color: white;
+}
+.line{
+    border-top: 2px solid black;
+    margin-top: 5px;
+    padding: 5px;
+}
+.redText{
+    color: red;
+}
+.greenText{
+    color: green;
+}
+.myMargins{
+    margin: 20px;
+}
+h6{
+    display: block;
+}
+.flashes{
+    list-style-type: none;
+}

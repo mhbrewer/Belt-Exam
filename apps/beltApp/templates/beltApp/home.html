@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang=en>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Belt Exam Dashboard</title>
+    <meta name="description" content="Users">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'beltApp/css/style.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-light myNav">
+            <h1 class="myNavText">Home</h1>
+            <form class="form-inline" id="myNavButton" action="/dReads" method="get">
+                <button class="btn btn-outline-success my-2 my-sm-0" id="myNavButton" type="submit">Home</button>
+            </form>
+            <form class="form-inline" id="myNavButton" action="/logout" method="get">
+                <button class="btn btn-outline-success my-2 my-sm-0" id="myNavButton" type="submit">Logout</button>
+            </form> 
+            <form class="form-inline" id="myNavButton" action="/belt/job/new" method="get">
+                <button class="btn btn-outline-success my-2 my-sm-0" id="myNavButton" type="submit">Add a Job</button>
+            </form> 
+        </nav>
+        <h1>Hello {{ thisUser.firstName }}</h1>
+        <h4>All Jobs:</h4>
+        <table class="table">
+            <thead class="myTableHeader">
+                <tr>
+                    <th class="myTableText">Job</th>
+                    <th class="myTableText">Location</th>
+                    <th class="myTableText">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in notMyJobs %}
+                <tr>
+                    <th>{{ job.title }} {{ job.id }} </th>
+                    <th>{{ job.location }} </th>
+                    <th>
+                        <form class='action' action="/belt/job/view" method='post'>
+                            {% csrf_token %}
+                            <input type="hidden" name="whichJob" value={{job.id}}>
+                            <button type='submit' class='btn btn-dark'>View</button>
+                        </form>
+                        <form class='action' action="/belt/job/add" method='post'>
+                            {% csrf_token %}
+                            <input type="hidden" name="whichJob" value={{job.id}}>
+                            <button type='submit' class='btn btn-dark'>Add</button>
+                        </form>
+                        {% if job.poster.id == thisUser.id %}
+                        <form class='action' action="/belt/job/edit" method='post'>
+                            {% csrf_token %}
+                            <input type="hidden" name="whichJob" value={{job.id}}>
+                            <button type='submit' class='btn btn-dark'>Edit</button>
+                        </form>
+                        <form class='action' action="/belt/job/delete" method='post'>
+                            {% csrf_token %}
+                            <input type="hidden" name="whichJob" value={{job.id}}>
+                            <button type='submit' class='btn btn-dark'>Delete</button>
+                        </form>
+                        {% endif %}
+                    </th>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h4>{{ thisUser.firstName }}'s Jobs:</h4>
+        <table class="table">
+            <thead class="myTableHeader">
+                <tr>
+                    <th class="myTableText">Job</th>
+                    <th class="myTableText">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in myJobs %}
+                <tr>
+                    <th>{{ job.title }} </th>
+                    <th>
+                        <form class='action' action="/belt/job/view" method='get'>
+                            <input type="hidden" name="whichJob" value={{job.id}}>
+                            <button type='submit' class='btn btn-dark'>View</button>
+                        </form>
+                        <form class='action' action="/belt/job/done" method='post'>
+                            {% csrf_token %}
+                            <input type="hidden" name="whichJob" value={{job.id}}>
+                            <button type='submit' class='btn btn-dark'>Done</button>
+                        </form>
+                        <form class='action' action="/belt/job/giveup" method='post'>
+                            {% csrf_token %}
+                            <input type="hidden" name="whichJob" value={{job.id}}>
+                            <button type='submit' class='btn btn-dark'>Give Up</button>
+                        </form>
+                    </th>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+    </div>
+</body>
+
+</html>
